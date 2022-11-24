@@ -1,0 +1,58 @@
+GET http://94.198.50.185:7081/api/users
+Content-Type: application/json
+
+> {%
+ client.global.set("cookie", response.headers.valuesOf("Set-Cookie")[0]);
+ client.log(client.global.get("cookie"));
+%}
+###
+
+POST http://94.198.50.185:7081/api/users
+Content-Type: application/json
+Set-Cookie: {{cookie}}
+
+{
+  "id": 3,
+  "name": "James",
+  "lastName": "Brown",
+  "age": 1
+}
+
+> {%
+ client.log(response.body.toString())
+ %}
+###
+
+PUT http://94.198.50.185:7081/api/users
+Content-Type: application/json
+Set-Cookie: {{cookie}}
+
+{
+  "id": 3,
+  "name": "Thomas",
+  "lastName": "Shelby",
+  "age": 1
+}
+
+> {%
+ client.log(response.body.toString())
+ %}
+###
+
+DELETE http://94.198.50.185:7081/api/users/3
+Content-Type: application/json
+Set-Cookie: {{cookie}}
+
+> {%
+ client.log(response.body.toString())
+ %}
+
+
+
+
+
+
+
+
+
+
